@@ -1,0 +1,12 @@
+{
+  "name": "sussy",
+  "version": "1.0.0",
+  "description": "Just a simple discord bot",
+  "main": "index.js",
+  "author": "Samrid Pandit",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "typescript": "^4.4.3"
+  }
+}

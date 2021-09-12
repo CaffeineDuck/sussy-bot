@@ -7,5 +7,5 @@ export const data = new SlashCommandBuilder()
   .setDescription("Replies with Pong!");
 
 export const execute = async (interaction: CommandInteraction) => {
-  await interaction.reply({ content: bot.ws.ping.toString(), ephemeral: true });
+  await interaction.reply({ content: `My ping is **${bot.ws.ping}** ms`});
 };

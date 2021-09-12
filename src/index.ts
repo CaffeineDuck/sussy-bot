@@ -1,7 +1,6 @@
 import { Intents } from "discord.js";
 import { SussyBot } from "./bot";
 import dotenv from "dotenv";
-import "module-alias/register";
 
 dotenv.config({ path: ".env.local" });
 

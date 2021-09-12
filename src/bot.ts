@@ -5,6 +5,7 @@ import { readdirSync } from "fs";
 import { Command } from "@interfaces/command";
 import { Config } from "@interfaces/config";
 import { Listener } from "@interfaces/listener";
+import path from 'path'
 
 export class SussyBot extends Client {
   config: Config;
@@ -18,34 +19,34 @@ export class SussyBot extends Client {
       throw new Error("Config not provided");
     }
     this.config = config;
-    this.commandFiles = readdirSync("@commands").filter((file) =>
+    this.commandFiles = readdirSync(path.join(__dirname,"commands")).filter((file) =>
       file.endsWith(".js")
     );
-    this.listenerFiles = readdirSync("@listeners").filter((file) =>
+    this.listenerFiles = readdirSync(path.join(__dirname, "listeners")).filter((file) =>
       file.endsWith(".js")
     );
   }
 
   loadCommands() {
     for (const file of this.commandFiles) {
-      const command: Command = require(`@commands/${file}`);
+      const command: Command = require(`./commands/${file}`);
       this.commands.set(command.data.name, command);
 
-      console.log(`[load] COMMAND: ${command.data.name}`);
+      console.log(`[load] COMMAND: ${file}`);
     }
     return this.commands;
   }
 
   loadListeners() {
     for (const file of this.listenerFiles) {
-      const listener: Listener = require(`@listeners/${file}`);
+      const listener: Listener = require(`./listeners/${file}`);
       if (listener.once) {
         this.once(listener.name, (...args) => listener.execute(...args));
       } else {
         this.on(listener.name, (...args) => listener.execute(...args));
       }
 
-      console.log(`[load] LISTENER: ${listener.name}`);
+      console.log(`[load] LISTENER: ${file}`);
     }
   }
 

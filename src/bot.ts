@@ -1,6 +1,9 @@
+import { REST } from "@discordjs/rest";
+import { Routes } from "discord-api-types/rest/v9";
 import { Client, ClientOptions, Collection } from "discord.js";
 import { readdirSync } from "fs";
 import { Command } from "./types/command";
+import { Config } from "./types/config";
 import { Listener } from "./types/listener";
 
 export class SussyBot extends Client {
@@ -43,6 +46,38 @@ export class SussyBot extends Client {
       }
 
       console.log(`[load] LISTENER: ${listener.name}`);
+    }
+  }
+
+  async registerCommands(token?: string) {
+    try {
+      const rest = new REST({ version: "9" }).setToken(
+        token || this.config.token
+      );
+
+      const commandValues = this.commands.mapValues((command) =>
+        command.data.toJSON()
+      );
+
+      await rest.put(
+        this.config.env === "developement"
+          ? Routes.applicationGuildCommands(
+              this.config.clientId,
+              this.config.guildId
+            )
+          : Routes.applicationCommands(this.config.clientId),
+        {
+          body: commandValues,
+        }
+      );
+
+      console.log(
+        this.config.env === "developement"
+          ? "[register] GUILD commands registered"
+          : "[register] GLOBAL commands registered"
+      );
+    } catch (error) {
+      console.error(error);
     }
   }
 

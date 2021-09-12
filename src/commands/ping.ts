@@ -9,4 +9,3 @@ export const data = new SlashCommandBuilder()
 export const execute = async (interaction: CommandInteraction) => {
   await interaction.reply({ content: bot.ws.ping.toString(), ephemeral: true });
 };
-

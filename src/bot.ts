@@ -18,10 +18,10 @@ export class SussyBot extends Client {
       throw new Error("Config not provided");
     }
     this.config = config;
-    this.commandFiles = readdirSync('@commands').filter((file) =>
+    this.commandFiles = readdirSync("@commands").filter((file) =>
       file.endsWith(".js")
     );
-    this.listenerFiles = readdirSync('@listeners').filter((file) =>
+    this.listenerFiles = readdirSync("@listeners").filter((file) =>
       file.endsWith(".js")
     );
   }

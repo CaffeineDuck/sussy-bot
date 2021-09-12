@@ -2,9 +2,9 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/rest/v9";
 import { Client, ClientOptions, Collection } from "discord.js";
 import { readdirSync } from "fs";
-import { Command } from "./types/command";
-import { Config } from "./types/config";
-import { Listener } from "./types/listener";
+import { Command } from "interfaces/command";
+import { Config } from "interfaces/config";
+import { Listener } from "interfaces/listener";
 
 export class SussyBot extends Client {
   config: Config;
@@ -18,17 +18,17 @@ export class SussyBot extends Client {
       throw new Error("Config not provided");
     }
     this.config = config;
-    this.commandFiles = readdirSync(config.commandDirPath).filter((file) =>
+    this.commandFiles = readdirSync('@commands').filter((file) =>
       file.endsWith(".js")
     );
-    this.listenerFiles = readdirSync(config.listenerDirPath).filter((file) =>
+    this.listenerFiles = readdirSync('@listeners').filter((file) =>
       file.endsWith(".js")
     );
   }
 
   loadCommands() {
     for (const file of this.commandFiles) {
-      const command = require(`${this.config.commandDirPath}/${file}`);
+      const command = require(`@commands/${file}`);
       this.commands.set(command.data.name, command);
 
       console.log(`[load] COMMAND: ${command.data.name}`);
@@ -38,7 +38,7 @@ export class SussyBot extends Client {
 
   loadListeners() {
     for (const file of this.listenerFiles) {
-      const listener: Listener = require(`${this.config.listenerDirPath}/${file}`);
+      const listener: Listener = require(`@listeners/${file}`);
       if (listener.once) {
         this.once(listener.name, (...args) => listener.execute(...args));
       } else {

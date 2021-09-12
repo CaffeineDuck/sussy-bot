@@ -6,7 +6,21 @@
   "author": "Samrid Pandit",
   "license": "MIT",
   "dependencies": {
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.23.1",
     "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "pm2": "^5.1.1",
     "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "register:dev": "node dist/register/dev.js",
+    "register:global": "node dist/registerCommand.global.js",
+    "run:prod": "node dist/index.js",
+    "run:pm2": "pm2 dist/index.js --name \"djs sussy bot \"",
+    "run:dev": "nodemon dist/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
   }
 }

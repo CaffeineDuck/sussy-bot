@@ -1,4 +1,4 @@
-import { SussyBot } from "src/bot";
+import { SussyBot } from "../bot";
 
 export const name = 'ready'
 

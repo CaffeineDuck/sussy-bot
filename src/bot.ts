@@ -2,9 +2,9 @@ import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/rest/v9";
 import { Client, ClientOptions, Collection } from "discord.js";
 import { readdirSync } from "fs";
-import { Command } from "interfaces/command";
-import { Config } from "interfaces/config";
-import { Listener } from "interfaces/listener";
+import { Command } from "@interfaces/command";
+import { Config } from "@interfaces/config";
+import { Listener } from "@interfaces/listener";
 
 export class SussyBot extends Client {
   config: Config;
@@ -28,7 +28,7 @@ export class SussyBot extends Client {
 
   loadCommands() {
     for (const file of this.commandFiles) {
-      const command = require(`@commands/${file}`);
+      const command: Command = require(`@commands/${file}`);
       this.commands.set(command.data.name, command);
 
       console.log(`[load] COMMAND: ${command.data.name}`);

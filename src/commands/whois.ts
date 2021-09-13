@@ -30,8 +30,16 @@ export const execute = async (interaction: CommandInteraction) => {
       .replaceAll("_", " ")}`;
   });
 
+  let acknowledgement: "Member" | "Server Owner" | "Administrator" = "Member";
+  
+  if (member.permissions.has("ADMINISTRATOR")) {
+    acknowledgement = "Administrator";
+  } else if (interaction.guild?.ownerId === member.id) {
+    acknowledgement = "Server Owner";
+  }
+
   const userEmbed = new MessageEmbed()
-    .setColor(`${member.displayHexColor}`)
+    .setColor(member.displayHexColor)
     .setAuthor(
       `Userinfo of ${user.tag}`,
       user.avatarURL({ dynamic: true }) || user.defaultAvatarURL
@@ -65,7 +73,7 @@ export const execute = async (interaction: CommandInteraction) => {
       },
       {
         name: "Acknowledgement",
-        value: member.guild.ownerId == user.id ? "Server Owner" : "Member",
+        value: acknowledgement,
       }
     );
   await interaction.reply({ embeds: [userEmbed] });

@@ -7,3 +7,6 @@ dist/
 # Env vars
 .env.local
 .env
+
+# TypeORM
+src/migration/

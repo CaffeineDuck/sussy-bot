@@ -1,8 +1,8 @@
 import { Intents } from "discord.js";
 import { SussyBot } from "./bot";
-import dotenv from "dotenv";
+import ormConfig from "./ormConfig";
 
-dotenv.config({ path: ".env.local" });
+console.log(ormConfig);
 
 export const bot = new SussyBot(
   { intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILDS] },
@@ -11,6 +11,7 @@ export const bot = new SussyBot(
     clientId: process.env.CLIENT_ID || "751026843687321660",
     guildId: process.env.GUILD_ID || "876667721302024262",
     env: process.env.NODE_ENV || "developement",
+    ormConfig: ormConfig,
   }
 );
 
@@ -19,6 +20,7 @@ bot.loadListeners();
 
 (async () => {
   await bot.registerCommands();
+  await bot.connectDB();
 })();
 
 bot.botLogin();

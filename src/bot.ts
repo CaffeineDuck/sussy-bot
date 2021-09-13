@@ -5,7 +5,9 @@ import { readdirSync } from "fs";
 import { Command } from "@interfaces/command";
 import { Config } from "@interfaces/config";
 import { Listener } from "@interfaces/listener";
-import path from 'path'
+import path from "path";
+import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+import { createConnection } from "typeorm";
 
 export class SussyBot extends Client {
   config: Config;
@@ -19,11 +21,11 @@ export class SussyBot extends Client {
       throw new Error("Config not provided");
     }
     this.config = config;
-    this.commandFiles = readdirSync(path.join(__dirname,"commands")).filter((file) =>
-      file.endsWith(".js")
+    this.commandFiles = readdirSync(path.join(__dirname, "commands")).filter(
+      (file) => file.endsWith(".js")
     );
-    this.listenerFiles = readdirSync(path.join(__dirname, "listeners")).filter((file) =>
-      file.endsWith(".js")
+    this.listenerFiles = readdirSync(path.join(__dirname, "listeners")).filter(
+      (file) => file.endsWith(".js")
     );
   }
 
@@ -84,5 +86,10 @@ export class SussyBot extends Client {
 
   botLogin(token?: string) {
     return this.login(token || this.config.token);
+  }
+
+  async connectDB(ormConfig?: PostgresConnectionOptions) {
+    await createConnection(ormConfig || this.config.ormConfig);
+    console.log('[database] Connected to DB')
   }
 }

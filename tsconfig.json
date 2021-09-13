@@ -26,6 +26,6 @@
       "@interfaces/*": ["interfaces/*"],
     }
   },
-  "exclude": ["node_modules", "db"],
+  "exclude": ["node_modules"],
   "include": ["./src/**/*.ts"]
 }

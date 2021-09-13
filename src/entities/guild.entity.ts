@@ -6,8 +6,8 @@ import {
   ManyToMany,
   OneToMany,
 } from "typeorm";
-import { User } from "./User";
-import { Invite } from "./Invite";
+import { User } from "./user.entity";
+import { Invite } from "./invite.entity";
 
 @Entity()
 export class Guild extends BaseEntity {

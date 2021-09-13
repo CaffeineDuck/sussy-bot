@@ -11,7 +11,7 @@ export default {
   username: process.env.DB_USERNAME ?? "test",
   password: process.env.DB_PASSWORD ?? "test",
   database: process.env.DB_DATABASE ?? "sussy_bot",
-  synchronize: true,
+  synchronize: false,
   logging: false,
   entities: ["dist/entities/**/*.{ts,js}"],
   migrations: ["src/migrations/**/*.{ts,js}"],

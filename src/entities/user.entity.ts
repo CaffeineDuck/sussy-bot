@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
-import { Guild } from "./Guild";
-import { Invite } from "./Invite";
+import { Guild } from "./guild.entity";
+import { Invite } from "./invite.entity";
 
 @Entity()
 export class User {

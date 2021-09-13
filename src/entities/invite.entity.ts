@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
-import { User } from "./User";
-import { Guild } from "./Guild";
+import { User } from "./user.entity";
+import { Guild } from "./guild.entity";
 
 @Entity()
 export class Invite extends BaseEntity {

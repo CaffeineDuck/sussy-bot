@@ -18,8 +18,11 @@ export class Guild extends BaseEntity {
   name: string;
 
   @ManyToMany((_) => User, (user) => user.id)
-  users: User[];
+  users?: User[];
 
   @OneToMany((_) => Invite, (invite) => invite.id)
-  invites: Invite[];
+  invites?: Invite[];
+
+  @Column("json", {array: true, nullable: true})
+  inviteRole?: InviteRole[]
 }

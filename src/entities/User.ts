@@ -12,8 +12,8 @@ export class User {
 
   @ManyToMany((_) => Guild, (guild) => guild.id)
   @JoinTable()
-  guilds: Guild[];
+  guilds?: Guild[];
 
   @OneToMany((_) => Invite, (invite) => invite.id)
-  invites: Invite[];
+  invites?: Invite[];
 }

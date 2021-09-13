@@ -1,6 +1,6 @@
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-export interface Config {
+interface Config {
   token: string;
   clientId: string;
   guildId: string;

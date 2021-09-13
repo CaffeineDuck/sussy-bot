@@ -13,6 +13,6 @@ export class Invite extends BaseEntity {
   @ManyToOne((_) => Guild, (guild) => guild.id)
   guild: Guild;
 
-  @Column()
+  @Column({default: 0})
   uses: number;
 }

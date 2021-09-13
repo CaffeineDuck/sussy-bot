@@ -4,7 +4,6 @@ import { Client, ClientOptions, Collection } from "discord.js";
 import { readdirSync } from "fs";
 import { Command } from "@interfaces/command";
 import { Config } from "@interfaces/config";
-import { Listener } from "@interfaces/listener";
 import path from "path";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 import { createConnection } from "typeorm";

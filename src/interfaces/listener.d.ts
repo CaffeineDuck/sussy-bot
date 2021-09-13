@@ -1,4 +1,4 @@
-export interface Listener {
+interface Listener {
     name: string;
     once: boolean;
     execute: (...args: any[]) => void;

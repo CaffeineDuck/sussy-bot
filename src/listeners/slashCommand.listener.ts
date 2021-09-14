@@ -12,9 +12,18 @@ export const execute = async (interaction: CommandInteraction) => {
 
   if (!command) return;
 
+  if (!interaction.guild && command.guildRequired) {
+    await interaction.reply({
+      content: "This command can only be run in a guild",
+      ephemeral: true,
+    });
+  }
+
   try {
     await command.execute(interaction);
   } catch (err) {
+    console.error(err);
+
     return interaction.reply({
       content: `There was an error executing the command ${err}`,
       ephemeral: true,

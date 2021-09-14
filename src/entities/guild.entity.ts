@@ -5,19 +5,21 @@ import {
   BaseEntity,
   ManyToMany,
   OneToMany,
+  JoinTable,
 } from "typeorm";
 import { User } from "./user.entity";
 import { Invite } from "./invite.entity";
 
-@Entity()
+@Entity("guilds")
 export class Guild extends BaseEntity {
   @PrimaryColumn("bigint")
-  id: number;
+  id: string;
 
   @Column()
   name: string;
 
   @ManyToMany((_) => User, (user) => user.id)
+  @JoinTable()
   users?: User[];
 
   @OneToMany((_) => Invite, (invite) => invite.id)

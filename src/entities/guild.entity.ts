@@ -7,23 +7,23 @@ import {
   OneToMany,
   JoinTable,
 } from "typeorm";
-import { User } from "./user.entity";
-import { Invite } from "./invite.entity";
+import { UserModel } from "./user.entity";
+import { InviteModel } from "./invite.entity";
 
 @Entity("guilds")
-export class Guild extends BaseEntity {
+export class GuildModel extends BaseEntity {
   @PrimaryColumn("bigint")
   id: string;
 
   @Column()
   name: string;
 
-  @ManyToMany((_) => User, (user) => user.id)
+  @ManyToMany((_) => UserModel, (user) => user.id)
   @JoinTable()
-  users?: User[];
+  users?: UserModel[];
 
-  @OneToMany((_) => Invite, (invite) => invite.id)
-  invites?: Invite[];
+  @OneToMany((_) => InviteModel, (invite) => invite.id)
+  invites?: InviteModel[];
 
   @Column("json", {array: true, nullable: true})
   inviteRole?: InviteRole[]

@@ -62,7 +62,7 @@ export class SussyBot extends Client {
       );
 
       await rest.put(
-        this.config.env === "developement"
+        this.config.env === "development"
           ? Routes.applicationGuildCommands(
               this.config.clientId,
               this.config.guildId
@@ -74,7 +74,7 @@ export class SussyBot extends Client {
       );
 
       console.log(
-        this.config.env === "developement"
+        this.config.env === "development"
           ? "[register] GUILD commands registered"
           : "[register] GLOBAL commands registered"
       );

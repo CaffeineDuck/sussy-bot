@@ -6,20 +6,20 @@ import {
   OneToMany,
   PrimaryColumn,
 } from "typeorm";
-import { Guild } from "./guild.entity";
-import { Invite } from "./invite.entity";
+import { GuildModel } from "./guild.entity";
+import { InviteModel } from "./invite.entity";
 
 @Entity("users")
-export class User extends BaseEntity {
+export class UserModel extends BaseEntity {
   @PrimaryColumn("bigint")
   id: string;
 
   @Column()
   username: string;
 
-  @ManyToMany((_) => Guild, (guild) => guild.id)
-  guilds?: Guild[];
+  @ManyToMany((_) => GuildModel, (guild) => guild.id)
+  guilds?: GuildModel[];
 
-  @OneToMany((_) => Invite, (invite) => invite.id)
-  invites?: Invite[];
+  @OneToMany((_) => InviteModel, (invite) => invite.id)
+  invites?: InviteModel[];
 }

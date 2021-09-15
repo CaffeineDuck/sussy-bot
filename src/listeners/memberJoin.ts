@@ -1,7 +1,7 @@
 import { GuildMember } from "discord.js";
-import { Guild as GuildModel } from "../entities/guild.entity";
-import { Invite as InviteModel } from "../entities/invite.entity";
-import { User as UserModel } from "../entities/user.entity";
+import { GuildModel } from "../entities/guild.entity";
+import { InviteModel } from "../entities/invite.entity";
+import { UserModel } from "../entities/user.entity";
 
 export const name = "guildMemberAdd";
 

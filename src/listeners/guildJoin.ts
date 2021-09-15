@@ -1,5 +1,5 @@
 import { Guild } from "discord.js";
-import { Guild as GuildModel } from "../entities/guild.entity";
+import { GuildModel } from "../entities/guild.entity";
 
 export const name = "guildCreate";
 

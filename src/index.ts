@@ -16,7 +16,7 @@ export const bot = new SussyBot(
     token: process.env.TOKEN!,
     clientId: process.env.CLIENT_ID || "751026843687321660",
     guildId: process.env.GUILD_ID || "876667721302024262",
-    env: process.env.NODE_ENV || "developement",
+    env: process.env.NODE_ENV || "development",
     ormConfig: ormConfig,
   }
 );
@@ -25,7 +25,7 @@ bot.loadCommands();
 bot.loadListeners();
 
 (async () => {
-  // await bot.registerCommands();
+  await bot.registerCommands();
   await bot.connectDB();
 })();
 

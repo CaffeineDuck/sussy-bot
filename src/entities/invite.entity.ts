@@ -1,19 +1,19 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { User } from "./user.entity";
-import { Guild } from "./guild.entity";
+import { UserModel } from "./user.entity";
+import { GuildModel } from "./guild.entity";
 
 @Entity("invites")
-export class Invite extends BaseEntity {
+export class InviteModel extends BaseEntity {
   @PrimaryColumn()
   id: string;
 
-  @ManyToOne((_) => User, (user) => user.id)
+  @ManyToOne((_) => UserModel, (user) => user.id)
   @JoinColumn()
-  creator: User;
+  creator: UserModel;
 
-  @ManyToOne((_) => Guild, (guild) => guild.id)
+  @ManyToOne((_) => GuildModel, (guild) => guild.id)
   @JoinColumn()
-  guild: Guild;
+  guild: GuildModel;
 
   @Column({default: 0})
   uses: number;

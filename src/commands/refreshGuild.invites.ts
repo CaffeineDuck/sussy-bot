@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "@discordjs/builders";
 import { CommandInteraction } from "discord.js";
-import { Guild as GuildModel } from "../entities/guild.entity";
+import { GuildModel } from "../entities/guild.entity";
 import { refreshGuildInvites } from "../utils/invite.utils";
 
 export const data = new SlashCommandBuilder()
@@ -10,7 +10,7 @@ export const data = new SlashCommandBuilder()
 export const execute = async (interaction: CommandInteraction) => {
   const guild = interaction.guild!;
 
-  await interaction.deferReply()
+  await interaction.deferReply();
 
   let guildInstance = await GuildModel.findOne(guild.id);
   if (!guildInstance) {

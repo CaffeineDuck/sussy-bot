@@ -2,19 +2,24 @@ import { Guild, GuildMember } from "discord.js";
 import { Guild as GuildModel } from "../entities/guild.entity";
 import { User as UserModel } from "../entities/user.entity";
 import { Invite as InviteModel } from "../entities/invite.entity";
+import { MoreThanOrEqual } from "typeorm";
 
 export const getUserInvites = async (
   member: GuildMember
 ): Promise<[InviteModel[], number]> => {
-  const userInvites = await InviteModel.findAndCount({
+  const userInvites = await InviteModel.find({
     where: {
       guild: { id: member.guild.id },
       creator: { id: member.id },
+      uses: MoreThanOrEqual(1),
     },
-    select: [],
+    select: ["uses"],
   });
 
-  return userInvites;
+  const uses = userInvites
+    .map((invite) => invite.uses)
+    .reduce((total, currentUse) => total + currentUse, 0);
+  return [userInvites, uses];
 };
 
 export const refreshUserInvites = async (
@@ -22,7 +27,7 @@ export const refreshUserInvites = async (
   creator: UserModel,
   guild: GuildModel
 ): Promise<void> => {
-  const userInvites = (await member.guild.invites.fetch())
+  const userInvites = member.guild.invites.cache
     .filter((invite) => invite.inviter?.id === member.id)
     .values();
 
@@ -55,14 +60,20 @@ export const refreshGuildInvites = async (
   guild: Guild,
   guildInstance: GuildModel
 ) => {
+  await guild.invites.fetch();
+
   const members = await getOrCreateMembers(guild, guildInstance);
+  const tasks: Promise<any>[] = [];
+
   for (const { guildMember, userInstance } of members) {
     if (!userInstance) {
       continue;
     }
 
-    await refreshUserInvites(guildMember, userInstance, guildInstance);
+    tasks.push(refreshUserInvites(guildMember, userInstance, guildInstance));
   }
+
+  await Promise.all(tasks);
 };
 
 export const getOrCreateMembers = async (
@@ -73,20 +84,17 @@ export const getOrCreateMembers = async (
 
   const guildMembers = guild.members.cache.map((member, _) => member);
   const memberIds = guildMembers.map((member) => member.user.id);
-  console.log(memberIds);
 
   const membersArray = await UserModel.findByIds(memberIds);
-  console.log(membersArray);
 
-  const notFoundMembers = membersArray.filter(
-    (user) => !memberIds.includes(user.id)
+  const notFoundMembers = guildMembers.filter(
+    (member) =>
+      !membersArray.find((memberInstance) => memberInstance.id === member.id)
   );
-  console.log(notFoundMembers);
 
-  const notFoundMemberInstances = notFoundMembers.map((user) =>
-    UserModel.create({ id: user.id, username: user.username })
+  const notFoundMemberInstances = notFoundMembers.map((member) =>
+    UserModel.create({ id: member.id, username: member.user.username })
   );
-  
 
   await UserModel.insert(notFoundMemberInstances);
   membersArray.push(...notFoundMemberInstances);

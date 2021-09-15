@@ -10,7 +10,7 @@ export const data = new SlashCommandBuilder()
 export const execute = async (interaction: CommandInteraction) => {
   const guild = interaction.guild!;
 
-  // await interaction.deferReply()
+  await interaction.deferReply()
 
   let guildInstance = await GuildModel.findOne(guild.id);
   if (!guildInstance) {
@@ -22,7 +22,7 @@ export const execute = async (interaction: CommandInteraction) => {
 
   await refreshGuildInvites(guild, guildInstance);
 
-  await interaction.reply({
+  await interaction.editReply({
     content: `Invites for **${guild.name}** updated successfully!`,
   });
 };
